@@ -21,7 +21,7 @@ In order to run the code following requirements must be satisfied. </br>
 
 ## File structure
 This repository is stuctured as follows
-- [source]()
+- [source](https://github.com/i-m-iron-man/NDE_Foraging/tree/main/source)
     - [exp_1_basic_foraging](https://github.com/i-m-iron-man/NDE_Foraging/tree/main/source/exp_1_basic_foraging): directory for Experiment 1.
         - [main.py](https://github.com/i-m-iron-man/NDE_Foraging/blob/main/source/exp_1_basic_foraging/main.py): A Python script that executes the learning process for different seeds.
         - [plot_values.ipynb](https://github.com/i-m-iron-man/NDE_Foraging/blob/main/source/exp_1_basic_foraging/plot_values.ipynb): An IPython notebook to plot the loss curve.
