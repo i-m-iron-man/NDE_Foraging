@@ -22,19 +22,19 @@ In order to run the code following requirements must be satisfied. </br>
 ## File structure
 This repository is stuctured as follows
 - [source]()
-    - [exp_1_basic_foraging](): directory for Experiment 1.
-        - [main.py](): A Python script that executes the learning process for different seeds.
-        - [plot_values,ipynb](): An IPython notebook to plot the loss curve.
-        - [analysis,ipynb](): An IPython notebook to observe the behaviour of agent at various stages of training.
-        - [render.py](): A Python Script to render the learned agent.
-    - [exp_2_evidence_accumulation](): directory for Experiment 2.
-        - [evidence.ipynb](): An IPython notebook to analyse the neuronal dynamics of the learned agent.
-    - [exp_3_diff_growth_rate](): directory for Experiment 3.
-        - [growth_rate_08f.py](): A Python file for learning in the environment having growth rate of 0.08.
-        - [growth_rate_10f.py](): A Python file for learning in the environment having growth rate of 0.1.
-        - [growth_rate_12f.py](): A Python file for learning in the environment having growth rate of 0.12.
-        - [growth_rate_time_analysis.ipynb](): An IPython notebook to sample and compare average patch residing time for agent trajectories in the 3 environemts.
-        - [avg_growth_rate_plt.ipynb](): An IPython notebook to plot the average patch residing time across the 3 environments for the first 3 patch visits.
+    - [exp_1_basic_foraging](https://github.com/i-m-iron-man/NDE_Foraging/tree/main/source/exp_1_basic_foraging): directory for Experiment 1.
+        - [main.py](https://github.com/i-m-iron-man/NDE_Foraging/blob/main/source/exp_1_basic_foraging/main.py): A Python script that executes the learning process for different seeds.
+        - [plot_values.ipynb](https://github.com/i-m-iron-man/NDE_Foraging/blob/main/source/exp_1_basic_foraging/plot_values.ipynb): An IPython notebook to plot the loss curve.
+        - [analysis.ipynb](https://github.com/i-m-iron-man/NDE_Foraging/blob/main/source/exp_1_basic_foraging/analysis.ipynb): An IPython notebook to observe the behaviour of agent at various stages of training.
+        - [render.py](https://github.com/i-m-iron-man/NDE_Foraging/blob/main/source/exp_1_basic_foraging/render.py): A Python Script to render the learned agent.
+    - [exp_2_evidence_accumulation](https://github.com/i-m-iron-man/NDE_Foraging/tree/main/source/exp_2_evidence_accumulation): directory for Experiment 2.
+        - [evidence.ipynb](https://github.com/i-m-iron-man/NDE_Foraging/blob/main/source/exp_2_evidence_accumulation/evidence.ipynb): An IPython notebook to analyse the neuronal dynamics of the learned agent.
+    - [exp_3_diff_growth_rate](https://github.com/i-m-iron-man/NDE_Foraging/tree/main/source/exp_3_diff_growth_rate): directory for Experiment 3.
+        - [growth_rate_08f.py](https://github.com/i-m-iron-man/NDE_Foraging/blob/main/source/exp_3_diff_growth_rate/growth_rate_08f.py): A Python file for learning in the environment having growth rate of 0.08.
+        - [growth_rate_10f.py](https://github.com/i-m-iron-man/NDE_Foraging/blob/main/source/exp_3_diff_growth_rate/growth_rate_10f.py): A Python file for learning in the environment having growth rate of 0.1.
+        - [growth_rate_12f.py](https://github.com/i-m-iron-man/NDE_Foraging/blob/main/source/exp_3_diff_growth_rate/growth_rate_12f.py): A Python file for learning in the environment having growth rate of 0.12.
+        - [growth_rate_time_analysis.ipynb](https://github.com/i-m-iron-man/NDE_Foraging/blob/main/source/exp_3_diff_growth_rate/growth_rate_time_analysis.ipynb): An IPython notebook to sample and compare average patch residing time for agent trajectories in the 3 environemts.
+        - [avg_growth_rate_plt.ipynb](https://github.com/i-m-iron-man/NDE_Foraging/blob/main/source/exp_3_diff_growth_rate/avg_growth_rate_plt.ipynb): An IPython notebook to plot the average patch residing time across the 3 environments for the first 3 patch visits.
 
       
       
