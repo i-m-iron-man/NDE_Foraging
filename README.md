@@ -22,18 +22,18 @@ In order to run the code following requirements must be satisfied. </br>
 ## File structure
 This repository is stuctured as follows
 - [source]()
-   - [exp_1_basic_foraging](): directory for Experiment 1.
+    - [exp_1_basic_foraging](): directory for Experiment 1.
         - [main.py](): A Python script that executes the learning process for different seeds.
         - [plot_values,ipynb](): An IPython notebook to plot the loss curve.
         - [analysis,ipynb](): An IPython notebook to observe the behaviour of agent at various stages of training.
         - [render.py](): A Python Script to render the learned agent.
-  - [exp_2_evidence_accumulation](): directory for Experiment 2.
+    - [exp_2_evidence_accumulation](): directory for Experiment 2.
         - [evidence.ipynb](): An IPython notebook to analyse the neuronal dynamics of the learned agent.
-  - [exp_3_diff_growth_rate](): directory for Experiment 3.
-        - [growth_rate_08.py](): A Python file for learning in the environment having growth rate of 0.08.
-        - [growth_rate_10.py](): A Python file for learning in the environment having growth rate of 0.1
-        - [growth_rate_12.py](): A Python file for learning in the environment having growth rate of 0.12
-        - [growth_rate_time_analysis.ipynb](): An IPython notebook to sample and compare average patch residing time for agent trajectories in the 3 environemts
+    - [exp_3_diff_growth_rate](): directory for Experiment 3.
+        - [growth_rate_08f.py](): A Python file for learning in the environment having growth rate of 0.08.
+        - [growth_rate_10f.py](): A Python file for learning in the environment having growth rate of 0.1.
+        - [growth_rate_12f.py](): A Python file for learning in the environment having growth rate of 0.12.
+        - [growth_rate_time_analysis.ipynb](): An IPython notebook to sample and compare average patch residing time for agent trajectories in the 3 environemts.
         - [avg_growth_rate_plt.ipynb](): An IPython notebook to plot the average patch residing time across the 3 environments for the first 3 patch visits.
 
       
