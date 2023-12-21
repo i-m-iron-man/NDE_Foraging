@@ -19,7 +19,9 @@ In order to run the code following requirements must be satisfied. </br>
 - [Matplotlib](https://matplotlib.org/) - 3.6.3
 
 ## File structure
-
+The repository is structured as following:</br>
+-
 ## Acknowledgements
+This software is part of the project Dutch Brain Interface Initiative (DBI$^2$) with project number 024.005.022 of the research programme Gravitation which is (partly) financed by the Dutch Research Council (NWO).
 
 ## Cite
