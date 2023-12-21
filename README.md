@@ -1,6 +1,8 @@
 # NDE Foraging
 This repository supplements our paper "A Dynamical Systems Approach to Optimal Foraging"</br>
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Alt Text](https://github.com/i-m-iron-man/NDE_Foraging/blob/main/media/foraging.gif)
+
 
 ## Overview
 This repository contains code for the 3 experiments presented in the paper. It is developed using the JAX ecosystem</br>
