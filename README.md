@@ -10,9 +10,13 @@ This repository contains code for the 3 experiments presented in the paper. </br
 
 ## Requirements
 In order to run the code following requirements must be satisfied. </br>
-- Python
+- [Python](https://www.python.org/downloads/) - 3.10.10
 - [JAX](https://jax.readthedocs.io/en/latest/installation.html) - 0.4.13
--  
+- [Diffrax](https://github.com/patrick-kidger/diffrax) - 0.4.0
+- [Equinox](https://github.com/patrick-kidger/equinox) - 0.10.6
+- [Optax](https://github.com/google-deepmind/optax) - 0.1.4
+- [NumPy](https://numpy.org/install/) - 1.26.1
+- [Matplotlib](https://matplotlib.org/) - 3.6.3
 
 ## File structure
 
