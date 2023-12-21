@@ -39,6 +39,6 @@ This repository is stuctured as follows
       
       
 ## Acknowledgements
-This software is part of the project Dutch Brain Interface Initiative (DBI$^2$) with project number 024.005.022 of the research programme Gravitation which is (partly) financed by the Dutch Research Council (NWO).
+This software is part of the project Dutch Brain Interface Initiative (DBI<sup>2</sup>) with project number 024.005.022 of the research programme Gravitation which is (partly) financed by the Dutch Research Council (NWO).
 
 ## Cite
