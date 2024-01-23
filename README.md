@@ -1,5 +1,5 @@
 # NDE Foraging
-This repository supplements our paper "A Dynamical Systems Approach to Optimal Foraging"</br>
+This repository supplements our paper "[A Dynamical Systems Approach to Optimal Foraging]"(https://www.biorxiv.org/content/10.1101/2024.01.20.576399v1)</br>
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)</br>
 ![Alt Text](https://github.com/i-m-iron-man/NDE_Foraging/blob/main/media/foraging.gif)
 
