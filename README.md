@@ -43,4 +43,19 @@ This repository is stuctured as follows
 ## Acknowledgements
 This software is part of the project Dutch Brain Interface Initiative (DBI<sup>2</sup>) with project number 024.005.022 of the research programme Gravitation which is (partly) financed by the Dutch Research Council (NWO).
 
-## Cite
+## Citation
+For citing this work you can cite the paper
+
+```
+@article {Chaturvedi2024.01.20.576399,
+	author = {Siddharth Chaturvedi and Ahmed ElGazzar and Marcel van Gerven},
+	title = {A Dynamical Systems Approach to Optimal Foraging},
+	elocation-id = {2024.01.20.576399},
+	year = {2024},
+	doi = {10.1101/2024.01.20.576399},
+	publisher = {Cold Spring Harbor Laboratory},
+	URL = {https://www.biorxiv.org/content/early/2024/01/22/2024.01.20.576399},
+	eprint = {https://www.biorxiv.org/content/early/2024/01/22/2024.01.20.576399.full.pdf},
+	journal = {bioRxiv}
+}
+```
