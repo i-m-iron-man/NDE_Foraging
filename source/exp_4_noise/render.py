@@ -83,7 +83,7 @@ def render(system: BigField, dt = 0.04, t1 = 40.0):
 if __name__ == "__main__":
     system = BigField(seed=11,num_neurons=40)
     train = Train(system, seed=11)
-    learned_system = eqx.tree_deserialise_leaves('./models_debug/epoch_870seed_1val9.73478831893567.eqx', system)
+    learned_system = eqx.tree_deserialise_leaves('./models/epoch_870seed_1val9.73478831893567.eqx', system)
     #learned_system = eqx.tree_deserialise_leaves('./models/deterministic.eqx', system)
     render(learned_system)
 
