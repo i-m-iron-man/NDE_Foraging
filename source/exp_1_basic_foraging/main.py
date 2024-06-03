@@ -14,7 +14,7 @@ config.update("jax_enable_x64", True)
 import numpy as np
 from typing import Callable
 
-#helper class to create random numbers
+
 class RandomMachine():
     key = None
     subkey = None
@@ -34,8 +34,7 @@ class RandomMachine():
     def produce_key(self):
         self.key , self.subkey = jax.random.split(self.key)
         return self.subkey
-
-# class used for modelling
+    
 class BigField(eqx.Module):
     random_machine: RandomMachine = eqx.static_field()
 
@@ -94,6 +93,7 @@ class BigField(eqx.Module):
         self.sin_tar = jnp.sin(self.tar_pos)
         self.cos_tar = jnp.cos(self.tar_pos)
         self.steepness = -7.0 # steepnees of gaussian kernel
+        print("self.steepness: ", self.steepness)
         
         self.beta = jnp.array([0.5])
         self.eta = jnp.array([0.1])
@@ -178,9 +178,9 @@ class BigField(eqx.Module):
         return (resource_eaten,  control)
     
     def reset(self, batch_size=1):
-        x_batch = jnp.array([self.random_machine.produce(dim=(4,), scale = 3.14)])
+        x_batch = jnp.array([self.random_machine.produce(dim=(4,), scale = 3.14)])# + jnp.array([pi/2,0.0])#self.x_init
         for i in range(batch_size-1):
-            x_init = self.random_machine.produce(dim=(1,4), scale = 3.14)
+            x_init = self.random_machine.produce(dim=(1,4), scale = 3.14)# + jnp.array([pi/2,0.0]) #self.x_init
             x_batch = jnp.append(x_batch, x_init, axis = 0)
         
         s_init = self.s_init
@@ -229,7 +229,7 @@ class BigField(eqx.Module):
         interval_begins = intervals[:-1]
         interval_endings = intervals[1:]
 
-        carry, sol = jax.lax.scan(self.simulate_truncated, carry, (interval_begins, interval_endings, ts))
+        carry, sol = jax.lax.scan(self.simulate_truncated, carry, (interval_begins, interval_endings, ts)) # f # carry = (x_init, z_init, s_init) # (t0-0.5(dt) t1+0.5(dt) [t0..........t1])
         
         xs = sol[0].reshape(sol[0].shape[0]*sol[0].shape[1],4)
         zs = sol[1].reshape(sol[1].shape[0]*sol[1].shape[1],self.num_neurons)
@@ -267,6 +267,88 @@ def make_step(bf:BigField, optimizer, opt_state, init_state_x_s = None):
     return value, new_bf, new_opt_state, optimizer, grads
 
 
+def infer(bf:BigField, init_state = None):
+    def per_initial_state(bf, init_state):
+        solver = Tsit5()
+        obs = jnp.array([jnp.sin(init_state[0][0]), jnp.cos(init_state[0][0]), init_state[0][1],
+                     jnp.sin(init_state[0][2]), jnp.cos(init_state[0][2]), init_state[0][3],
+                     init_state[1][0], init_state[1][1], init_state[2][0]])
+        z_init = bf.produce_z(obs)
+        init_state_x_z_s_e = (init_state[0], z_init, init_state[1], init_state[2])
+        t0 = 0.0
+        t1 = 40.0
+        dt0 = 0.04
+        ts = jnp.linspace(t0,t1,1000)
+        args = None
+        saveat = SaveAt(ts = ts, t1 = True)
+        term = ODETerm(bf.term)
+        sol = diffeqsolve(term, solver, t0, t1, dt0, init_state_x_z_s_e, args, saveat=saveat, stepsize_controller= PIDController(rtol=1e-3, atol=1e-6), max_steps=1000000)
+        return sol.ys
+    jit_per_initial_state = jax.jit(per_initial_state)
+    sol_ys = jax.vmap(jit_per_initial_state, in_axes=(None,0))(bf, init_state)
+    
+    xs, zs, ss, es = sol_ys[0], sol_ys[1], sol_ys[2], sol_ys[3]
+
+    time_approach = []
+    for es_traj in es:
+        counter = 0
+        for i in range(len(es_traj)-1):
+            if es_traj[i+1]>es_traj[i]:
+                counter+=1
+            else:
+                counter = 0
+            if counter >=5:
+                time_approach.append(i)
+                break
+            if i == len(es_traj)-2:
+                time_approach.append(i)
+    time_approach = jnp.array(time_approach)
+    print("time to approach: ", jnp.mean(time_approach))
+
+    # MSE error for the distance to the target when the agent is at the target
+    error=[]
+    tar_pos = bf.tar_pos # tar_pos = jnp.array([[pi/2, pi/2], [pi/2, 3*pi/2]])
+    for xs_traj in xs:
+        running_error_dist_1 = []
+        running_error_dist_2 = []
+        counter_dist_1 = 0
+        counter_dist_2 = 0
+        for i in range(len(xs_traj)):
+            agent_x = xs_traj[i][0]
+            agent_y = xs_traj[i][2]
+            dist_tar_1 = jnp.sqrt(jnp.square(agent_x - tar_pos[0][0]) + jnp.square(agent_y - tar_pos[0][1]))
+            dist_tar_2 = jnp.sqrt(jnp.square(agent_x - tar_pos[1][0]) + jnp.square(agent_y - tar_pos[1][1]))
+            
+            if dist_tar_1 < 0.5:
+                counter_dist_1+=1
+                running_error_dist_1.append(dist_tar_1)
+            else:
+                counter_dist_1 = 0
+                running_error_dist_1 = []
+            if counter_dist_1 >= 10:
+                error.append(jnp.mean(jnp.array(running_error_dist_1)))
+            
+            if dist_tar_2 < 0.5:
+                counter_dist_2+=1
+                running_error_dist_2.append(dist_tar_2)
+            else:
+                counter_dist_2 = 0
+                running_error_dist_2 = []
+            if counter_dist_2 >= 10:
+                error.append(jnp.mean(jnp.array(running_error_dist_2)))
+    if len(error) == 0:
+        print("No position control")
+        error = jnp.array([0.5])
+    else:
+        error = jnp.array(error)
+        print("MSE error for the distance to the target when the agent is at the target: ", jnp.mean(error))
+    return jnp.mean(time_approach), jnp.mean(error)
+                 
+                
+    
+    
+
+
 class Train():
     def __init__(self, bf:BigField, learning_rate = 3e-4, batch_size = 64, t1 = 40.0, dt = 0.04, num_epochs = 2000, best_model_path = "models/", seed = 0):
         self.bf = bf
@@ -286,17 +368,23 @@ class Train():
         self.value_at_freq = 0.0
         self.max_value = 4.0
 
+        self.infer_x_s_e = self.bf.reset(batch_size=5)
+
     def save(self, path):
         eqx.tree_serialise_leaves(path, self.bf)
     
     def load(self, path):
         return eqx.tree_deserialise_leaves(path, self.bf)
     
-    def train(self, print_feq = 40, render_freq = 2000):
+    def train(self, print_feq = 10, render_freq = 2000):
+        dist_errors = []
+        time_approaches = []
         for epoch in range(self.num_epochs):
             init_state_x_s = self.bf.reset(batch_size=self.batch_size)
             
             value, self.bf, self.opt_state, self.optimizer, grads = make_step(self.bf, self.optimizer, self.opt_state, init_state_x_s)
+            
+            
             self.values.append(-value)
             self.value_at_freq -= value
 
@@ -304,21 +392,32 @@ class Train():
             if (epoch+1) % print_feq == 0 and epoch != 0:
                 print("epoch: ", epoch, "loss: ", self.value_at_freq/print_feq)
                 self.value_at_freq = 0.0
+                time_approach, dist_error = infer(self.bf, self.infer_x_s_e)
+                dist_errors.append(dist_error)
+                time_approaches.append(time_approach)
             
             if -value > self.max_value:
                 self.max_value = -value+0.5
                 self.save(self.best_model_path+"epoch_"+str(epoch)+"seed_"+str(self.seed)+"val"+str(-value)+".eqx")
                 print("new best model saved")
 
-        return self.values
+        return self.values, time_approaches, dist_errors
     
 if __name__ == "__main__":
     seeds = [1,2,3]
     values = []
+    time_approaches = []
+    dist_errors = []
     for seed in seeds:
         test = BigField(num_neurons=40, seed=seed)
-        train = Train(test,num_epochs=3000, seed=seed)
-        values_per_seed = train.train()
+        train = Train(test,num_epochs=1000, seed=seed)
+        values_per_seed, time_approaches_per_seed, dist_errors_per_seed = train.train()
         values.append(values_per_seed)
+        time_approaches.append(time_approaches_per_seed)
+        dist_errors.append(dist_errors_per_seed)
     values = np.array(values)
+    time_approaches = np.array(time_approaches)
+    dist_errors = np.array(dist_errors)
     np.save("values.npy", values)
+    np.save("time_approaches.npy", time_approaches)
+    np.save("dist_errors.npy", dist_errors)
