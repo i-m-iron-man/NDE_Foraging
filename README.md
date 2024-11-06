@@ -1,5 +1,5 @@
 # NDE Foraging
-This repository supplements our paper ["A Dynamical Systems Approach to Optimal Foraging"](https://www.biorxiv.org/content/10.1101/2024.01.20.576399v1)</br>
+This repository supplements our paper ["A Dynamical Systems Approach to Optimal Foraging"](https://doi.org/10.1371/journal.pcsy.0000018)</br>
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)</br>
 ![Alt Text](https://github.com/i-m-iron-man/NDE_Foraging/blob/main/media/foraging.gif)
 
@@ -10,7 +10,7 @@ This repository contains code for the 3 experiments presented in the paper. It i
 - Experiment 2 presents an analysis of evidence accumulation mechanism observed in the adaptive agent. </br>
 - Experiment 3 presents an analysis of change in average patch residing time of the adaptive agent with respect to change in growth rate of the resources in the environment.</br>
 - Experiment 4 shows how the setup can be extended to nosiy setup like noise in observations.
-- Experiment 5 shows how the setup can be extended to nosiy setup like multi-agent setups.
+- Experiment 5 shows how the setup can be extended to multi-agent setups.
 
 ## Requirements
 In order to run the code following requirements must be satisfied. </br>
